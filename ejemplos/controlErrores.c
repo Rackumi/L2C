@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <string.h>
 
-int ce(){
+int main(){
     FILE *f1;
     f1 = fopen("file.txt", "r+");
     if(f1 == NULL){

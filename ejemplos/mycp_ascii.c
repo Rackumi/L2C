@@ -3,7 +3,7 @@
 
 #define LONGBUFFER2 1024
 
-int mycp_ascii(){
+int main(){
 
     FILE  *fe, *fs;
     char *entrada = "entrada";

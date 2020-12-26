@@ -4,7 +4,7 @@
 
 #define LONGBUFFER 256
 
-int mycp(){
+int main(){
     int fde, fds, nr;
     char *entrada = "entrada";
     char *salida = "salida";
