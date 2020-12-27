@@ -3,5 +3,6 @@
 #include "ejemplos/controlErrores.c"
 
 int main(){
+    printf("Hey there im learning C");
     return 0;
 }
