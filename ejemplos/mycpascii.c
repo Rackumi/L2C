@@ -3,7 +3,7 @@
 
 #define LONGBUFFER2 1024
 
-int main(){
+int main(int argc, char** argv){
 
     FILE  *fe, *fs;
     char *entrada = "entrada";
