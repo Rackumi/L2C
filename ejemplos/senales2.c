@@ -34,6 +34,9 @@ int main(){
         printf("El hijo ha terminado");
     }
 
+    //Señales programables -> SIGUSR1, SIGUSR2, SIGCHILD (un hijo ha terminado), SIGINT (crl+c termina el proceso), SIGTERM (terminacion normal)
+    //Señales no programables -> SIGKILL (destruccion del proceso), SIGSTOP (detiene el proceso, creo que es crl+z)
+
     return 0;
 
 }
