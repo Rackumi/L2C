@@ -2,23 +2,25 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <wait.h>
 
-int tuberia[2];
+int p1[2];
 pid_t pid;
 
 void fManejador(int sig){
     int r;
-
     if(pid == 0){
-        r = rand() % 10;
+        r = rand() % 11;
+        write(p1[1], &r, 1024);
         exit(0);
     }
 }
 
 int main(){
 
-    pipe(tuberia);
-
+    int r;
+    pipe(p1);
+    char buffer[1024];
     signal(SIGUSR1, fManejador);
 
     pid = fork();
@@ -27,16 +29,22 @@ int main(){
         exit(1);
     }
     else if(pid == 0){ //hijo
-        close(tuberia[1]);
-//        write(tuberia[1],buffer);
-        close(tuberia[0]);
+        close(p1[0]);
+        while(1);
     }
     else{ //padre
-        close(tuberia[0]);
-        kill(pid, SIGUSR1);
+        close(p1[1]);
+        while(fgets(buffer, 1024, stdin) != NULL){
+            kill(pid, SIGUSR1);
+            read(p1[0], &r, 1024);
+            printf("%d\n",r);
+        }
 
+        close(p1[1]);
 
-        close(tuberia[1]);
+        kill(pid, SIGKILL);
+        wait(NULL);
+        exit(0);
     }
 
     return 0;
