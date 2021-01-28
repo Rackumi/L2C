@@ -11,7 +11,7 @@ pid_t pid;
 int i;
 
 void manejador(int sig){
-    printf("Soy el hijo %d con el pid %d\n",i,pids[i]);
+    printf("Soy el hijo %d con el pid %d\n",i,getpid());
     sleep(1);
     if(i != 0){
         printf("terminé, paso el testigo al hijo %d con pid %d\n",i-1,pids[i-1]);
@@ -21,7 +21,6 @@ void manejador(int sig){
         printf("terminé\n");
     }
     exit(0);
-
 }
 
 int main(){
@@ -46,7 +45,7 @@ int main(){
     wait(NULL);
     wait(NULL);
 
-    printf("Todos los hijos terminaron");
+    printf("Todos los hijos terminaron\n");
 
     return 0;
 }
