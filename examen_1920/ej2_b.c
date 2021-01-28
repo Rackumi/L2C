@@ -14,11 +14,11 @@ int main(int argc, char **argv){
     int longitud;
     int p[2];
 
-    FILE *p_p, *f_p, *f_e;
+    FILE *p_p, *f_p, *f_e, *f_d;
 
     pipe(p);
 
-    if(argc != 3){
+    if(argc != 4){
         printf("Uso: %s programa argumentos\n", argv[0]);
         return(1);
     }
@@ -62,6 +62,11 @@ int main(int argc, char **argv){
                 }
             }
         }
+        f_d = fopen(argv[3],"w");
+        if(f_d == NULL){
+            fprintf(stderr,"Falló el archivo guardar existencias.\n%s\n", strerror(errno));
+            exit(1);
+        }
         for(int j=1; j<501; j++){
             if(f_pedidos[j] > 0){
                 int num = f_existencias[j] - f_pedidos[j];
@@ -72,9 +77,19 @@ int main(int argc, char **argv){
                         num = 10 - num;
                     }
                     printf("Del producto %d hay que fabricar %d.\n",j,num);
+                    sprintf(buf,"%d 10\n", j);
+                }else{
+                    sprintf(buf,"%d %d\n", j, num);
                 }
+                fputs(buf, f_d);
+                fflush(f_d);
+            }else if(f_existencias[j] > 0){
+                sprintf(buf,"%d %d\n", j, f_existencias[j]);
+                fputs(buf, f_d);
+                fflush(f_d);
             }
         }
+        fclose(f_d);
         exit(0);
     }else{ //Padre
         close(p[0]); //Cierro lectura
