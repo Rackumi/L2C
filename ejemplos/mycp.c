@@ -5,7 +5,8 @@
 #define LONGBUFFER 256
 
 int main(){
-    int fde, fds, nr;
+    int fde, fds;
+    int nr;
     char *entrada = "entrada";
     char *salida = "salida";
     char buffer[LONGBUFFER];
