@@ -5,6 +5,7 @@
     <sourceRoots>
       <file path="$PROJECT_DIR$/ejemplos" />
       <file path="$PROJECT_DIR$/ejercicios" />
+      <file path="$PROJECT_DIR$/examen_1920" />
     </sourceRoots>
   </component>
   <component name="JavaScriptSettings">
