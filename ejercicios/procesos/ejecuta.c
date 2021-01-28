@@ -36,8 +36,8 @@ int main(int argc, char **argv){
            - WEXITSTATUS(statusHijo): devuelve el valor que ha pasado el hijo a la funcion exit(), siempre y cuando la
                                       macro anterior indique que la salida ha sido por llamada a exit().
         */
-        if(WIFEXITED(status) != 0){
-            if(WEXITSTATUS(status) != 0){
+        if(WIFEXITED(status) != 0){ //distinto de 0 si hijo terminó
+            if(WEXITSTATUS(status) != 0){ //si distinto de 0 el programa ejecutó bien
                 printf("El comando se ejecutó correctamente\n");
             }
         }

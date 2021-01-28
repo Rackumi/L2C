@@ -34,7 +34,7 @@ int main(){
         } else if (pid == 0) {// hijo
             pause();
         } else {//padre
-            pids[i] = pid;
+            pids[i] = pid; //el unico que tiene completo el array de pids es el cuarto proceso hijo ya que es el ultimo que se crea
         }
     }
 

@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
     }
 
     for(i=0; i<argc-1; i++){
-        for(j=strlen(inv1[i]); j>= 0; j--){
+        for(j=(int)strlen(inv1[i]); j>= 0; j--){
             printf("%c",inv1[i][j]);
         }
         printf(" ");
