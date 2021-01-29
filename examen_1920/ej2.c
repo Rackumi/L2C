@@ -29,7 +29,7 @@ int main(int argc, char **argv){
 
     pid = fork();
     if(pid<0){ //error
-        fprintf(stderr,"Falló el fork().\n%s\n",strerror(errno));
+        fprintf(stderr,"Falló el fork(). %s\n",strerror(errno));
         exit(1);
     }
     else if(pid==0){ //hijo
