@@ -6,7 +6,6 @@
 #define REPARTIDORESS 20
 #define SEDESS 5
 
-int *repartidores;
 int *sedes;
 
 int *repartidores_id;
@@ -22,9 +21,9 @@ void *repartidor(void *n){
     //esto se debe a que no queremos que se produzca una condcion de carrera. Esto sucederia si se pudiese acceder a una variable a la vez desde dos hilos
     //distintos, lo que haria que el valor de esta variable no fuese el real
     pthread_mutex_lock(&mutex); //inicio seccion critica 1
-    aux = rand()%(4+1)+4; //selecciona una de las 5 sedes aleatoriamente
+    aux = rand()%5; //selecciona una de las 5 sedes aleatoriamente
     while(sedes[aux] == 0){
-        sleep((rand()%3));
+        pthread_cond_wait(&cond1, &mutex);
     }
     printf("el repartidor, %d va la sede %d y coge sus paquetes\n",repartidores_id[(int)n], aux);
     nPaquetes = sedes[aux];
@@ -34,15 +33,15 @@ void *repartidor(void *n){
     sleep((rand()%2));
 
     pthread_mutex_lock(&mutex); //inicio seccion critica 2
-    aux = rand()%(4+1)+4; //selecciona una de las 5 sedes aleatoriamente
+    aux = rand()%5; //selecciona una de las 5 sedes aleatoriamente
     while(sedes[aux] > 20){
-        sleep((rand()%3));
+        pthread_cond_signal(&cond1);
     }
     printf("el repartidor, %d va la sede %d y deja sus paquetes\n",repartidores_id[(int)n], aux);
     sedes[aux] = nPaquetes;
 
-    for(j=0; j<aux; j++){  //reparte los pquetes que tiene a otras sedes
-        aux2 = rand()%(4+1)+4;
+    for(j=0; j<aux; j++){  //reparte los paquetes que tiene a otras sedes
+        aux2 = rand()%5;
         sedes[aux2]++; //aumentan en 1 el paquete en una sede aleatoria
         sedes[aux]--; //decrementa en 1 el paquete en la sede en la que estamos
     }
@@ -61,6 +60,8 @@ int main(void) {
     }
 
     pthread_t th; //creamos el thread
+
+    pthread_cond_init(&cond1, NULL);
 
     for(i=0; i<REPARTIDORESS; i++){
         repartidores_id[i] = i;

@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define FILOSOFOS 5
 
@@ -46,11 +46,11 @@ void *filosofo(void *num) {
 		printf("Filósofo %d quiere comer\n", fil_id);
 		print_estado();
 
+        // Entrando en sección crítica
 		pthread_mutex_lock(&mutex); // Espera para poder modificar el estado
 		while((palillo[fil_id]) || (palillo[(fil_id+1)%FILOSOFOS]))
-			pthread_cond_wait(&espera[fil_id], &mutex);
+			pthread_cond_wait(&espera[fil_id], &mutex); //condicion
 
-		// Entrando en sección crítica
 		palillo[fil_id] = 1; //ocupas este palillo
 		palillo[(fil_id+1)%FILOSOFOS] = 1; //este tmb lo ocupas
 

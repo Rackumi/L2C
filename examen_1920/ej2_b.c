@@ -11,7 +11,6 @@ int main(int argc, char **argv){
     int f_pedidos[501]; //datos fichero pedidos
     int f_existencias[501]; // datos fichero existencias
     char buf[1024];
-    int longitud;
     int p[2];
 
     FILE *p_p, *f_p, *f_e, *f_d;
@@ -41,10 +40,8 @@ int main(int argc, char **argv){
                 if(atoi(buf) == -1){
                     continuar--;
                 }else{
-                    int longitud = strlen(buf);
-                    int pos = 0;
-                    int codigo = 0;
-                    int cantidad = 0;
+                    int codigo;
+                    int cantidad;
                     int j=0;
                     codigo = atoi(&buf[j]);
                     while(buf[j] != ' '){
